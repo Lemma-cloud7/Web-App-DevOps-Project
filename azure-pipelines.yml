@@ -1,4 +1,5 @@
 # Starter pipeline
+
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -10,11 +11,18 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: Docker@2
-  displayName: 'Build and Push Docker Image'
+- task: DockerCompose@0
   inputs:
-    containerRegistry: 'DockerHubConnection'  
-    repository: 'theodora755/test-app:latest'  
-    command: 'buildAndPush'
-    Dockerfile: './Dockerfile'  # Path to your Dockerfile
-    tags: 'latest'
+    containerregistrytype: 'Azure Container Registry'
+    azureSubscription: 'Teodora Nechifor DevOps(0169353e-72e1-499c-8db7-97966d3c1e62)'
+    dockerComposeFile: '**/docker-compose.yml'
+    action: 'Run a Docker Compose command'
+# - task: Docker@2
+
+  # displayName: 'Build and Push Docker Image'
+  # inputs:
+  #   containerRegistry: 'DockerHubConnection'  
+  #   repository: 'theodora755/test-app:latest'  
+  #   command: 'buildAndPush'
+  #   Dockerfile: './Dockerfile'  # Path to your Dockerfile
+  #   tags: 'latest'
