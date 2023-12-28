@@ -16,5 +16,5 @@ steps:
     containerRegistry: 'DockerHubConnection'  
     repository: 'theodora755/test-app:latest'  
     command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'  # Path to your Dockerfile
+    Dockerfile: './Dockerfile'  # Path to your Dockerfile
     tags: 'latest'
