@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: flask-app
-        #image: theodora755/test-app:latest
-        image: mayaaiuga/test-run-image:latest
+        image: theodora755/test-app:latest
+        #image: mayaaiuga/test-run-image:latest
         ports:
         - containerPort: 5000
   strategy:
