@@ -16,12 +16,12 @@ steps:
     command: 'buildAndPush'
     repository: 'mayaaiuga/test-run-image'
     Dockerfile: '**/Dockerfile'
-    tags: 'latest'
-    - task: KubernetesManifest@1
-  inputs:
-    action: 'deploy'
-    connectionType: 'azureResourceManager'
-    azureSubscriptionConnection: 'aks-service-connection'
-    azureResourceGroup: 'aks-rg'
-    kubernetesCluster: 'aks-demo'
-    manifests: 'application-manifest.yaml'
+  #   tags: 'latest'
+  #   - task: KubernetesManifest@1
+  # inputs:
+  #   action: 'deploy'
+  #   connectionType: 'azureResourceManager'
+  #   azureSubscriptionConnection: 'aks-service-connection'
+  #   azureResourceGroup: 'aks-rg'
+  #   kubernetesCluster: 'aks-demo'
+  #   manifests: 'application-manifest.yaml'
