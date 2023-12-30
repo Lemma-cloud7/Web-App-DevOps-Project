@@ -17,5 +17,5 @@ steps:
     containerRegistry: 'Docker Hub'
     #repository: 'mayaaiuga/test-run-image'
     command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
+  Dockerfile: '**/Dockerfile'
     tags: 'latest'
