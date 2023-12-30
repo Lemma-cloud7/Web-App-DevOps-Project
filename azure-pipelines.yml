@@ -4,7 +4,6 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-
 trigger:
 - main
 
@@ -15,7 +14,8 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'Docker Hub'
-    #repository: 'mayaaiuga/test-run-image'
+    # repository: 'mayaaiuga/test-run-image'
     command: 'buildAndPush'
-  Dockerfile: '**/Dockerfile'
+    Dockerfile: '**/Dockerfile'
     tags: 'latest'
+
