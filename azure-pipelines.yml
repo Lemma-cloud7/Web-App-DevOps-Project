@@ -11,18 +11,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: Docker@2
+- task: DockerCompose@0
   inputs:
-    command: 'buildAndPush'
-    #repository: 'mayaaiuga/test-run-image'
-    repository: 'theodora755/test-app'
-    Dockerfile: '**/Dockerfile'
-    tags: 'latest'
-- task: KubernetesManifest@1
-  inputs:
-    action: 'deploy'
-    connectionType: 'azureResourceManager'
-    azureSubscriptionConnection: 'aks-service-connection'
-    azureResourceGroup: 'aks-rg'
-    kubernetesCluster: 'aks-demo'
-    manifests: 'application-manifest.yaml'
+    containerregistrytype: 'Azure Container Registry'
+    azureSubscription: 'Teodora Nechifor DevOps(0169353e-72e1-499c-8db7-97966d3c1e62)'
+    dockerComposeFile: '**/docker-compose.yml'
+    action: 'Run a Docker Compose command'
