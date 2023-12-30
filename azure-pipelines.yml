@@ -22,7 +22,7 @@ steps:
   inputs:
     action: 'deploy'
     connectionType: 'azureResourceManager'
-    azureSubscriptionConnection: 'aks-service-connection'
+    azureSubscriptionConnection: 'aks-service-connection-docker'
     azureResourceGroup: 'aks-rg'
     kubernetesCluster: 'aks-demo'
     manifests: 'application-manifest.yaml'
