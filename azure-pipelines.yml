@@ -14,7 +14,8 @@ steps:
 - task: Docker@2
   inputs:
     command: 'buildAndPush'
-    repository: 'mayaaiuga/test-run-image'
+    #repository: 'mayaaiuga/test-run-image'
+    repository: 'theodora755/test-app:latest'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
     - task: KubernetesManifest@1
