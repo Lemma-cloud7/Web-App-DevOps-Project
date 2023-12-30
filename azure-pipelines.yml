@@ -14,7 +14,7 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'Docker Hub'
-    # repository: 'mayaaiuga/test-run-image'
+    repository: 'theodora755/test-app'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
