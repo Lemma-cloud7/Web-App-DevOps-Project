@@ -14,7 +14,7 @@ server = 'devops-project-server.database.windows.net'
 database = 'orders-db'
 username = 'maya'
 password = 'AiCore1237'
-driver= '{ODBC Driver 18 for SQL Server}'
+driver= '{ODBC Driver 17 for SQL Server}'
 
 # Create the connection string
 connection_string=f'Driver={driver};\
