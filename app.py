@@ -18,11 +18,6 @@ managed_identity_client_id = os.environ.get("MANAGED_IDENTITY_CLIENT_ID")
 credential = DefaultAzureCredential(managed_identity_client_id=managed_identity_client_id)
 secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
 
-# Azure Key Vault URL and setup
-#key_vault_url = "https://test-vault-teodora.vault.azure.net/"
-#credential = DefaultAzureCredential(managed_identity_client_id="47443869-9ae7-4d88-9c93-32bb5538bde3")
-#print(credential.values)
-#secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
 
 # Access secret values from Key Vault
 server = secret_client.get_secret("DatabaseServer").value
