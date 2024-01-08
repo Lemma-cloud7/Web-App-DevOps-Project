@@ -351,6 +351,49 @@ Networking related variables (resource_group_name, vnet_id, control_plane_subnet
 
 
 
+
+
+# Kubernetes Deployment Documentation
+
+## Deployment and Service Manifests
+
+### Overview
+Kubernetes deployment involves two key components: the Deployment and Service manifests. These manifests are defined in the `application-manifest.yaml` file and serve specific purposes in the deployment process.
+
+### Deployment Manifest
+
+- **Purpose:** The Deployment manifest (`flask-app-deployment`) manages the lifecycle of the application pods. It ensures that the desired number of replicas of the application are running and manages updates to those applications.
+  - **Replicas:** Set to 2 for high availability.
+  - **Labels:** Uses `app: flask-app` for easy identification and management of our pods.
+  - **Container Image:** Specifies the Docker image from Docker Hub.
+  - **Ports:** Exposes port 5000, matching the application's internal port.
+
+### Service Manifest
+
+- **Purpose:** The Service manifest (`flask-app-service`) defines how the application pods are accessed within the cluster.
+  - **Type:** `ClusterIP`, making it an internal service within the cluster.
+  - **Selector:** Matches the labels of the Deployment pods to route traffic effectively.
+  - **Ports:** Listens on port 80, targeting port 5000 on the pods.
+
+### Deployment Strategy
+
+- **Strategy Chosen:** Rolling Update.
+- **Reasoning:** This strategy allows for zero downtime during updates. It ensures that one replica of the application is always available while updating the pods.
+- **Benefits:** Enhances availability and provides a seamless update experience without interrupting the service to end-users.
+
+#### Process
+
+- **Port Forwarding:** Used `kubectl port-forward` to expose the application locally for testing purposes.
+- **Verification:** Checked the status of pods and services using `kubectl get pods/services` to confirm they were running correctly.
+
+#### Results
+
+- The application responded as expected with all functionalities operational.
+- The Deployment and Service configurations proved effective in managing and exposing the application.
+
+
+
+
 ## Contributors 
 
 - [Maya Iuga]([https://github.com/yourusername](https://github.com/maya-a-iuga))
