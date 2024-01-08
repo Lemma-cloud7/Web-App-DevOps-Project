@@ -391,6 +391,198 @@ Kubernetes deployment involves two key components: the Deployment and Service ma
 - The application responded as expected with all functionalities operational.
 - The Deployment and Service configurations proved effective in managing and exposing the application.
 
+# Azure DevOps CI/CD Pipeline Documentation
+
+## Overview
+
+This project utilizes Azure DevOps to implement a Continuous Integration/Continuous Deployment (CI/CD) pipeline for a Flask-based web application. This document outlines the pipeline's configuration and operational details.
+
+## Pipeline Configuration
+
+### 1. Source Repository Integration
+
+- Connected to a GitHub repository hosting the Flask application.
+- Pipeline triggers automatically on every push to the main branch.
+
+### 2. Build Pipeline
+
+- Configured to build a Docker image of the web application.
+- Docker image is built using the Dockerfile in the repository root.
+- Image is tagged and pushed to Docker Hub upon successful build.
+
+### 3. Release Pipeline
+
+- Triggered after the build pipeline's completion.
+- Deploys the Docker image from Docker Hub to an AKS cluster.
+
+### 4. Integration with Docker Hub
+
+- Service connection established using a personal access token.
+
+### 5. Integration with AKS
+
+- Linked via an Azure DevOps service connection.
+- Configured for pulling the latest Docker image for deployment.
+
+
+### 2. Pipeline Process Monitoring
+
+- Monitoring of build, push, and deployment stages.
+- Review of logs and outputs for anomalies or errors.
+
+## Encountered Issues and Resolutions
+
+### 1. Permission and Access Token Scopes
+
+- Initially faced 'unauthorized: access token has insufficient scopes' error.
+- Resolved by updating the access token scopes on Docker Hub.
+
+### 2. Dockerfile Path Issues
+
+- Encountered errors related to the Dockerfile path not being recognized.
+- Fixed by adjusting the file path in the pipeline YAML configuration.
+
+### 3. Service Connection Misconfiguration
+
+- Faced issues with AKS service connection not recognizing the resource group.
+- Corrected by reconfiguring the service connection with appropriate permissions.
+
+### 4. Pipeline YAML Syntax Errors
+
+- Encountered YAML parsing errors due to incorrect syntax and indentation.
+- Resolved through careful review and correction of the pipeline YAML file.
+
+
+# Monitoring Strategy for AKS Cluster
+
+
+- **Metric Tracked:** CPU Usage Percentage.
+- **Significance:** This chart helps in monitoring the CPU load on each node, ensuring that no node is over-utilized.
+- **Interpretation:** Values consistently above 80% might indicate a need for scaling or optimizing applications to prevent performance degradation.
+
+### Chart 2: Average Pod Count
+
+- **Metric Tracked:** Number of Pods.
+- **Significance:** This chart tracks the average number of pods, giving insights into the cluster's capacity usage and workload distribution.
+- **Interpretation:** A sudden increase or decrease in pod count can indicate scaling events or potential issues with pod deployments.
+
+### Chart 3: Used Disk Percentage
+
+- **Metric Tracked:** Disk Usage.
+- **Significance:** Monitors disk space usage to prevent storage-related issues.
+- **Interpretation:** High disk usage can lead to performance issues or a complete halt if the disk becomes full.
+
+### Chart 4: Bytes Read and Written per Second
+
+- **Metric Tracked:** Data I/O.
+- **Significance:** Provides insights into the data transfer rates, crucial for identifying performance bottlenecks.
+- **Interpretation:** High or erratic I/O can indicate intensive application activities or potential I/O related performance issues.
+
+## Log Analytics
+
+### Log 1: Average Node CPU Usage Percentage per Minute
+
+- **Content:** Logs detailing per-minute CPU usage stats per node.
+- **Relevance:** Helps in identifying trends and spikes in CPU usage.
+
+### Log 2: Average Node Memory Usage Percentage per Minute
+
+- **Content:** Logs capturing memory usage statistics.
+- **Relevance:** Essential for detecting memory-related performance concerns.
+
+### Log 3: Pods Counts with Phase
+
+- **Content:** Count of pods in different lifecycle phases.
+- **Relevance:** Offers insights into pod lifecycle, helpful in managing cluster workload.
+
+### Log 4: Warning Value in Container Logs
+
+- **Content:** Warning messages from container logs.
+- **Relevance:** Early detection of issues or errors within containers.
+
+### Log 5: Kubernetes Events
+
+- **Content:** Logs of Kubernetes events like pod scheduling and errors.
+- **Relevance:** Tracks the overall health and activities within the cluster.
+
+The monitoring system is configured with alarms to proactively manage the AKS cluster. Here are the key alarm configurations:
+
+### Alarm 1: Disk Usage
+
+- **Condition:** Triggered when used disk percentage exceeds 90%.
+- **Threshold:** 90% disk usage.
+- **Response:** Investigate the cause of high disk usage and consider increasing storage capacity or optimizing storage use.
+
+### Alarm 2: CPU Usage
+
+- **Condition:** Triggered when CPU usage exceeds 80%.
+- **Threshold:** 80% CPU usage.
+- **Response:** Analyse the cause of high CPU usage and consider scaling the application or optimizing CPU-intensive processes.
+
+### Alarm 3: Memory Usage
+
+- **Condition:** Triggered when memory usage exceeds 80%.
+- **Threshold:** 80% memory usage.
+- **Response:** Inspect memory usage patterns, check for memory leaks, and consider scaling or optimizing memory usage.
+
+# Managing Secrets in AKS with Azure Key Vault
+
+## Overview
+
+This document details the setup and integration of Azure Key Vault with our AKS (Azure Kubernetes Service) cluster, focusing on secrets management and secure access patterns. It outlines the roles and permissions assigned for managing the Key Vault, the specifics of the secrets stored, and the steps taken to integrate AKS with the Key Vault.
+
+## Azure Key Vault Setup
+
+- **Key Vault Creation:** Created `test-vault-teodora` in Azure.
+- **Permissions:** Assigned the "Key Vault Secrets Officer" role to the Managed Identity used by AKS for reading, listing, setting, and deleting secrets.
+
+## Secrets in Key Vault
+
+Stored crucial secrets for database access:
+
+- **DatabaseServer:** The database server address.
+- **DatabaseName:** The database name.
+- **DatabaseUser:** Username for database access.
+- **DatabasePassword:** The associated password.
+
+## AKS Integration with Key Vault
+
+- **Managed Identity for AKS:** Enabled for AKS to interact securely with Azure services.
+- **Assigning Permissions:** Granted "Key Vault Secrets Officer" role to Managed Identity.
+- **Code Modifications:** Updated to use `ManagedIdentityCredential` from `azure.identity` for dynamic secret retrieval.
+
+## Challenges and Solutions
+
+### Challenge 1: Managed Identity Authentication
+
+- **Issue:** Initial trouble with Managed Identity authentication.
+- **Solution:** Ensured the correct subscription context in Azure CLI and updated the application code to specify the Managed Identity client ID.
+
+### Challenge 2: Azure Key Vault Access
+
+- **Issue:** Difficulty in accessing secrets from the Key Vault in local development.
+- **Solution:** Used `DefaultAzureCredential` for local development and `ManagedIdentityCredential` for AKS environment.
+
+### Challenge 3: Environment Variables
+
+- **Issue:** Exposing sensitive information in the code.
+- **Solution:** Implemented environment variables and `.env` file to securely manage sensitive data.
+
+### Challenge 4: Deployment Errors
+
+- **Issue:** Encountered errors during AKS deployment.
+- **Solution:** Reviewed and corrected Azure DevOps pipeline configurations and permissions.
+
+### Challenge 5: Docker Image Build
+
+- **Issue:** Problems with building and running the Docker image.
+- **Solution:** Updated `requirements.txt` and refactored Dockerfile to ensure all dependencies were included.
+
+This document highlights the journey in integrating Azure Key Vault with AKS, emphasizing secure secrets management. The challenges faced were instrumental in enhancing the understanding and capability in managing cloud-native applications securely.
+
+---
+
+**Note:**  THANK YOU AiCore for the amazing experience and the outstanding and quick support everytime I need it!!
 
 
 
