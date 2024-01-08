@@ -242,6 +242,72 @@ This document outlines the process and steps taken to define networking resource
 
 3. **Apply Configuration:**
    - Run `terraform apply` to apply the configuration and create resources.
+  
+
+# Provisioning AKS Cluster using Terraform
+
+## Overview
+
+This section of the documentation outlines the steps and configurations used to provision an Azure Kubernetes Service (AKS) cluster using Terraform as part of the Infrastructure as Code (IaC) strategy.
+
+## AKS Cluster Module in Terraform
+
+### Defining the Cluster
+
+The AKS cluster is defined in the `aks-cluster-module`. This module sets up the Kubernetes cluster with specified configurations using Azure as the cloud provider.
+
+### Input Variables
+
+1. **aks_cluster_name**
+   - **Description:** Specifies the name of the AKS cluster.
+   - **Type:** string
+
+2. **cluster_location**
+   - **Description:** Azure region where the AKS cluster will be deployed.
+   - **Type:** string
+
+3. **dns_prefix**
+   - **Description:** DNS prefix for the AKS cluster.
+   - **Type:** string
+
+4. **kubernetes_version**
+   - **Description:** Kubernetes version for the AKS cluster.
+   - **Type:** string
+
+5. **service_principal_client_id**
+   - **Description:** Client ID for the service principal.
+   - **Type:** string
+
+6. **service_principal_secret**
+   - **Description:** Client Secret for the service principal.
+   - **Type:** string
+
+7. **Networking Module Variables**
+   - **Includes:** `resource_group_name`, `vnet_id`, `control_plane_subnet_id`, and `worker_node_subnet_id`.
+   - **Description:** These variables are passed from the networking module to define the network configuration for the AKS cluster.
+
+### Output Variables
+
+1. **aks_cluster_name**
+   - **Description:** The name of the provisioned AKS cluster.
+
+2. **aks_cluster_id**
+   - **Description:** The ID of the provisioned AKS cluster.
+
+3. **aks_kubeconfig**
+   - **Description:** Kubernetes configuration file for managing the AKS cluster.
+
+### Steps to Provision
+
+1. **Initialize the Module:**
+   - Run `terraform init` inside the `aks-cluster-module`.
+
+2. **Plan the Deployment:**
+   - Execute `terraform plan` to preview the changes.
+
+3. **Apply the Configuration:**
+   - Run `terraform apply` to provision the AKS cluster.
+
 
 ## Contributors 
 
