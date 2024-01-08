@@ -1,64 +1,22 @@
-# Input Variables for AKS Cluster Module
+# Variables for the Networking Module
 
-# AKS Cluster Name
-variable "aks_cluster_name" {
-  description = "The name of the AKS cluster."
-  type        = string
-}
-
-# Cluster Location
-variable "cluster_location" {
-  description = "The Azure region where the AKS cluster will be deployed."
-  type        = string
-}
-
-# DNS Prefix
-variable "dns_prefix" {
-  description = "The DNS prefix for the AKS cluster."
-  type        = string
-}
-
-# Kubernetes Version
-variable "kubernetes_version" {
-  description = "The version of Kubernetes to use for the AKS cluster."
-  type        = string
-}
-
-# Service Principal Client ID
-variable "service_principal_client_id" {
-  description = "The Client ID for the service principal associated with the AKS cluster."
-  type        = string
-}
-
-# Service Principal Secret
-variable "service_principal_secret" {
-  description = "The Client Secret for the service principal."
-  type        = string
-}
-
-# Networking Module Variables
-
-# Resource Group Name from Networking Module
+# Variable for Azure Resource Group Name
 variable "resource_group_name" {
-  description = "The name of the Resource Group where networking resources are provisioned."
+  description = "The name of the Azure Resource Group where networking resources will be deployed."
   type        = string
+  default     = "myResourceGroup"  # Replace with your desired default value
 }
 
-# Virtual Network ID from Networking Module
-variable "vnet_id" {
-  description = "The ID of the Virtual Network (VNet)."
+# Variable for Azure Region Location
+variable "location" {
+  description = "The Azure region where the networking resources will be deployed."
   type        = string
+  default     = "East US"  # Replace with your desired default value
 }
 
-# Control Plane Subnet ID from Networking Module
-variable "control_plane_subnet_id" {
-  description = "The ID of the subnet for the AKS control plane."
-  type        = string
+# Variable for Virtual Network Address Space
+variable "vnet_address_space" {
+  description = "The address space for the Virtual Network (VNet)."
+  type        = list(string)
+  default     = ["10.0.0.0/16"]  # Replace with your desired default value
 }
-
-# Worker Node Subnet ID from Networking Module
-variable "worker_node_subnet_id" {
-  description = "The ID of the subnet for AKS worker nodes."
-  type        = string
-}
-
