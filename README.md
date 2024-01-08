@@ -307,6 +307,48 @@ The AKS cluster is defined in the `aks-cluster-module`. This module sets up the 
 
 3. **Apply the Configuration:**
    - Run `terraform apply` to provision the AKS cluster.
+  
+
+# Azure Kubernetes Service (AKS) Terraform Configuration
+
+This repository contains the Infrastructure as Code (IaC) for setting up an Azure Kubernetes Service (AKS) cluster using Terraform. The configuration includes a main file that sets up the provider and integrates networking and AKS cluster modules.
+
+## Main Configuration File
+
+The `main.tf` file is the heart of the Terraform configuration. It contains the following key components:
+
+### Provider Setup
+
+The Azure provider is configured to allow Terraform to interact with Azure resources.
+
+provider "azurerm" {
+  features {}
+}
+Credentials are not hard-coded but are supplied via environment variables in the secrets.tfvars file for enhanced security.
+Networking Module Integration
+The networking module sets up the necessary network infrastructure for the AKS cluster.
+module "networking" {
+  source = "./networking-module"
+  resource_group_name = "networking-resource-group"
+  location = "UK South"
+  vnet_address_space = ["10.0.0.0/16"]
+}
+Input Variables:
+
+resource_group_name: Name of the Azure resource group for networking resources.
+location: Azure region where networking resources are deployed.
+vnet_address_space: CIDR block for the virtual network.
+## AKS Cluster Module Integration
+The AKS cluster module provisions the Kubernetes cluster within the defined network infrastructure.
+Input Variables:
+
+cluster_name: Name of the AKS cluster.
+location: Azure region for AKS cluster deployment.
+dns_prefix: DNS prefix for AKS cluster.
+kubernetes_version: Version of Kubernetes for the AKS cluster.
+service_principal_client_id and service_principal_secret: Credentials for Azure service principal.
+Networking related variables (resource_group_name, vnet_id, control_plane_subnet_id, worker_node_subnet_id) are sourced from the networking module.
+
 
 
 ## Contributors 
