@@ -98,6 +98,151 @@ The `delivery_date` feature was designed to allow users to specify and view the 
 While the `delivery_date` feature is currently not part of the application, this documentation serves as a reference for future implementation needs. The feature could be reintroduced or modified based on future project requirements.
 
 
+
+# Docker Containerization Documentation
+
+## Introduction
+
+Containerization with Docker ensures a consistent and isolated environment for the application, facilitating easier development, testing, and deployment.
+
+## Dockerfile Breakdown
+
+The Dockerfile is a crucial component in the Docker containerization process. It defines the environment in which the application runs. Here’s a breakdown of the Dockerfile:
+
+### Base Image
+
+- `python:3.8-slim`
+- **Purpose:** This image provides a lightweight Python environment which is ideal for running the Flask application.
+### Working Directory
+
+-  `WORKDIR /app`
+- **Purpose:** Sets the working directory inside the container. This is where the application code resides in the container.
+
+### Copy Application Files
+
+-  `COPY . /app`
+- **Purpose:** Copies our application files from the current directory on the host into the `/app` directory in the container.
+
+### Install Dependencies
+
+- **ODBC Driver and System Dependencies:**
+  - Includes installation of `unixodbc`, `unixodbc-dev`, `odbcinst`, `libpq-dev`, `gcc`, and `msodbcsql17`.
+  - **Purpose:** These are necessary for establishing a connection to the Azure SQL Database.
+- **Python Packages:**
+  - **Command:** `RUN pip install --trusted-host pypi.python.org -r requirements.txt`
+  - **Purpose:** Installs the Python packages required for the application, as specified in `requirements.txt`.
+
+### Exposing Port
+
+- **Directive:** `EXPOSE 5000`
+- **Purpose:** Exposes port 5000 of the container, allowing the Flask application to be accessible.
+
+### Startup Command
+
+- **Directive:** `CMD ["python", "app.py"]`
+- **Purpose:** Specifies the command to run the Flask application when the container starts.
+
+## Docker Commands Used
+
+Documenting the Docker commands used in the project:
+
+- **Build the Image:**
+  - `docker build -t <image-name> .`
+  - **Explanation:** This command builds the Docker image from the Dockerfile in the current directory.
+- **Run the Container:**
+  - `docker run -p 5000:5000 <image-name>`
+  - **Explanation:** Runs the Docker container and maps port 5000 of the container to port 5000 on the host machine.
+- **Tagging the Image for Docker Hub:**
+  - `docker tag <local-image-name> <docker-hub-username>/<image-name>:<tag>`
+  - **Explanation:** Tags the image for pushing to Docker Hub.
+- **Pushing to Docker Hub:**
+  - `docker push <docker-hub-username>/<image-name>:<tag>`
+  - **Explanation:** Pushes the image to Docker Hub.
+
+## Image Information
+
+- **Name and Tag:** `<docker-hub-username>/<image-name>:<tag>`
+- **Usage:** Include instructions or special notes about using the image.
+
+## Cleanup Process
+
+To maintain a tidy development environment:
+
+- **Remove Containers:**
+  - List containers: `docker ps -a`
+  - Remove a container: `docker rm <container-id>`
+- **Remove Images:**
+  - List images: `docker images -a`
+  - Remove an image: `docker rmi <image-id>`
+
+## Conclusion
+
+This documentation aims to provide a clear understanding of the containerization process with Docker. It should serve as a reference for current and future team members working on the Project.
+
+
+
+# Infrastructure as Code for Networking Services
+
+## Overview
+
+This document outlines the process and steps taken to define networking resources for an Azure Kubernetes Service (AKS) cluster using Terraform. This approach ensures a repeatable, consistent deployment of the networking infrastructure.
+
+## Terraform Networking Module
+
+### Resources Created
+
+1. **Azure Resource Group (`azurerm_resource_group`):**
+   - **Purpose:** Serves as a container that holds related resources for this networking solution.
+   - **Name:** Defined by `resource_group_name` variable.
+
+2. **Virtual Network (VNet) (`azurerm_virtual_network`):**
+   - **Purpose:** Provides a private network for the AKS cluster.
+   - **Name:** "aks-vnet"
+   - **Address Space:** Specified by `vnet_address_space` variable.
+
+3. **Subnets (`azurerm_subnet`):**
+   - **Control Plane Subnet (`control-plane-subnet`):**
+     - Hosts the control plane components of the AKS cluster.
+   - **Worker Node Subnet (`worker-node-subnet`):**
+     - Used for AKS worker nodes.
+   - **Dependencies:** Both subnets depend on the VNet.
+
+4. **Network Security Group (NSG) (`azurerm_network_security_group`):**
+   - **Purpose:** Provides security rules for network traffic to and from Azure resources.
+   - **Name:** "aks-nsg"
+
+5. **NSG Rules (`azurerm_network_security_rule`):**
+   - **kube-apiserver-rule:**
+     - Allows traffic to the kube-apiserver.
+   - **ssh-rule:**
+     - Enables SSH traffic for management purposes.
+   - **Source Address:** Configured for a placeholder IP (or specific IPs as needed).
+
+### Input Variables
+
+- `resource_group_name`: The name for the Azure Resource Group.
+- `location`: Azure region for deploying resources.
+- `vnet_address_space`: Address space for the Virtual Network.
+
+### Output Variables
+
+- `vnet_id`: The ID of the Virtual Network.
+- `control_plane_subnet_id`: The ID of the control plane subnet.
+- `worker_node_subnet_id`: The ID of the worker node subnet.
+- `networking_resource_group_name`: The name of the resource group used.
+- `aks_nsg_id`: The ID of the Network Security Group.
+
+### Steps to Apply Configuration
+
+1. **Initialize Terraform:**
+   - Run `terraform init` in the root directory to initialize the project.
+
+2. **Plan Deployment:**
+   - Execute `terraform plan` to review the changes Terraform will make.
+
+3. **Apply Configuration:**
+   - Run `terraform apply` to apply the configuration and create resources.
+
 ## Contributors 
 
 - [Maya Iuga]([https://github.com/yourusername](https://github.com/maya-a-iuga))
