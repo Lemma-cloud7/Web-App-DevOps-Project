@@ -1,40 +1,23 @@
-# Output variable for AKS Cluster Name
-output "aks_cluster_name" {
-  description = "The name of the provisioned AKS cluster."
-  value       = azurerm_kubernetes_cluster.aks_cluster.name
+output "resource_group_name" {
+  description = "Name of the Azure Resource Group for networking resources."
+  value       = azurerm_resource_group.networking.name
+}
+output "vnet_id" {
+  description = "ID of the Virtual Network (VNet)."
+  value       = azurerm_virtual_network.aks_vnet.id
 }
 
-# Output variable for AKS Cluster ID
-output "aks_cluster_id" {
-  description = "The ID of the provisioned AKS cluster."
-  value       = azurerm_kubernetes_cluster.aks_cluster.id
+output "control_plane_subnet_id" {
+  description = "ID of the control plane subnet."
+  value       = azurerm_subnet.control_plane_subnet.id
 }
 
-# Output variable for AKS KubeConfig
-output "aks_kubeconfig" {
-  description = "The Kubernetes configuration file for managing the AKS cluster."
-  value       = azurerm_kubernetes_cluster.aks_cluster.kube_config_raw
-  sensitive   = true  # Marking this as sensitive to prevent exposing credentials
+output "worker_node_subnet_id" {
+  description = "ID of the worker node subnet."
+  value       = azurerm_subnet.worker_node_subnet.id
 }
 
-
-
-###################################
-# # Output variable for AKS Cluster Name
-# output "aks_cluster_name" {
-#   description = "The name of the provisioned AKS cluster."
-#   value       = azurerm_kubernetes_cluster.aks_cluster.name
-# }
-
-# # Output variable for AKS Cluster ID
-# output "aks_cluster_id" {
-#   description = "The ID of the provisioned AKS cluster."
-#   value       = azurerm_kubernetes_cluster.aks_cluster.id
-# }
-
-# # Output variable for AKS KubeConfig
-# output "aks_kubeconfig" {
-#   description = "The Kubernetes configuration file for managing the AKS cluster."
-#   value       = azurerm_kubernetes_cluster.aks_cluster.kube_config_raw
-#   sensitive   = true  # Marking this as sensitive to prevent exposing credentials
-# }
+output "aks_nsg_id" {
+  description = "ID of the Network Security Group (NSG) for AKS."
+  value       = azurerm_network_security_group.aks_nsg.id
+}
