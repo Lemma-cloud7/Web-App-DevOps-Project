@@ -52,6 +52,51 @@ To run the application, you simply need to run the `app.py` script in this repos
 - **Frontend:** The user interface is designed using HTML, CSS, and JavaScript to ensure a smooth and intuitive user experience.
 
 - **Database:** The application employs an Azure SQL Database as its database system to store order-related data.
+- # Documentation for the `delivery_date` Feature
+
+## Introduction
+
+This document provides comprehensive details about the `delivery_date` feature that was implemented and later reverted in the Web App DevOps Project. This feature aimed to add a delivery date attribute to the orders in the application.
+
+## For Developers
+
+### Overview of the Feature
+
+The `delivery_date` feature was designed to allow users to specify and view the delivery dates for orders. This feature involves changes in the database schema, the backend Python script (`app.py`), and the frontend HTML template (`order.html`).
+
+### Implementation Details
+
+#### Database Schema Changes
+
+- A new column named `delivery_date` of type `DateTime` was added to the `orders` table in the backend database.
+
+#### Backend Changes (`app.py`)
+
+- Order class in `app.py` was modified to include the `delivery_date` attribute.
+- Routes handling order creation and display were updated to process the `delivery_date`.
+
+#### Frontend Changes (`order.html`)
+
+- The `order.html` template was updated to include an input field for adding and a table column for displaying the `delivery_date`.
+
+
+### Troubleshooting
+
+- **Database Connection Issue:**
+  - Ensure the correct database credentials and connection strings are used.
+  - Verify network accessibility to the Azure SQL Database.
+  - Check if the ODBC driver is installed and configured correctly.
+### Reverting the Feature
+
+- The feature was reverted due to a change in project requirements. The revert process involved the following steps:
+  - Identifying the commit hash prior to the feature implementation.
+  - Executing `git revert COMMIT_HASH`.
+  - Resolving any merge conflicts and committing the revert.
+
+## Conclusion
+
+While the `delivery_date` feature is currently not part of the application, this documentation serves as a reference for future implementation needs. The feature could be reintroduced or modified based on future project requirements.
+
 
 ## Contributors 
 
