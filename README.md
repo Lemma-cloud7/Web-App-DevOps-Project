@@ -126,7 +126,7 @@ The Dockerfile is a crucial component in the Docker containerization process. It
 ### Install Dependencies
 
 - **ODBC Driver and System Dependencies:**
-  - Includes installation of `unixodbc`, `unixodbc-dev`, `odbcinst`, `libpq-dev`, `gcc`, and `msodbcsql17`.
+  - Includes installation of  `msodbcsql17`.
   - **Purpose:** These are necessary for establishing a connection to the Azure SQL Database.
 - **Python Packages:**
   - **Command:** `RUN pip install --trusted-host pypi.python.org -r requirements.txt`
@@ -154,15 +154,15 @@ Documenting the Docker commands used in the project:
   - **Explanation:** Runs the Docker container and maps port 5000 of the container to port 5000 on the host machine.
 - **Tagging the Image for Docker Hub:**
   - `docker tag <local-image-name> <docker-hub-username>/<image-name>:<tag>`
-  - **Explanation:** Tags the image for pushing to Docker Hub.
+  -  Tags the image for pushing to Docker Hub.
 - **Pushing to Docker Hub:**
   - `docker push <docker-hub-username>/<image-name>:<tag>`
-  - **Explanation:** Pushes the image to Docker Hub.
+  -  Pushes the image to Docker Hub.
 
 ## Image Information
 
 - **Name and Tag:** `<docker-hub-username>/<image-name>:<tag>`
-- **Usage:** Include instructions or special notes about using the image.
+- Include instructions or special notes about using the image.
 
 ## Cleanup Process
 
