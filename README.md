@@ -529,7 +529,7 @@ The monitoring system is configured with alarms to proactively manage the AKS cl
 
 ## Overview
 
-This document details the setup and integration of Azure Key Vault with our AKS (Azure Kubernetes Service) cluster, focusing on secrets management and secure access patterns. It outlines the roles and permissions assigned for managing the Key Vault, the specifics of the secrets stored, and the steps taken to integrate AKS with the Key Vault.
+This document details the setup and integration of Azure Key Vault with the AKS (Azure Kubernetes Service) cluster, focusing on secrets management and secure access patterns. It outlines the roles and permissions assigned for managing the Key Vault, the specifics of the secrets stored, and the steps taken to integrate AKS with the Key Vault.
 
 ## Azure Key Vault Setup
 
