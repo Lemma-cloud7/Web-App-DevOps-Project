@@ -23,7 +23,7 @@ steps:
   inputs:
     action: 'deploy'
     connectionType: 'azureResourceManager'
-    azureSubscriptionConnection: 'aks-service-connection'
+    azureSubscriptionConnection: 'Teodora Nechifor DevOps (0169353e-72e1-499c-8db7-97966d3c1e62)' #aks-service-connection
     azureResourceGroup: 'networking-resource-group'
     kubernetesCluster: 'terraform-aks-cluster'
     manifests: 'application-manifest.yaml'
