@@ -581,7 +581,8 @@ Stored crucial secrets for database access:
 This document highlights the journey in integrating Azure Key Vault with AKS, emphasizing secure secrets management. The challenges faced were instrumental in enhancing the understanding and capability in managing cloud-native applications securely.
 
 ---
-![image](https://github.com/Lemma-cloud7/Web-App-DevOps-Project/assets/110998333/feecf637-b96b-47ae-a956-f47d2efc96da)
+![image](https://github.com/Lemma-cloud7/Web-App-DevOps-Project/assets/110998333/d8102db4-3576-48f9-8fef-fb5cd7d8b86e)
+
 
 
 
